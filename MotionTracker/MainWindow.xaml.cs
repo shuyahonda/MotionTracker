@@ -26,6 +26,7 @@ namespace MotionTracker
         private BodyFrameReader bodyFrameReader;
         private Body[] bodies;
         ThreeDimensionalCoordinates coordinates;
+        int frameSkip = 0;
 
         public MainWindow()
         {
@@ -42,14 +43,14 @@ namespace MotionTracker
             {
                 this.jointsComboBox.Items.Add(joint.ToString());
             }
-
+            /*
             // test
             coordinates.X.Add(new ViewModel.CoordinateWithFrame(0.5, 1));
             coordinates.X.Add(new ViewModel.CoordinateWithFrame(0.6, 2));
             coordinates.X.Add(new ViewModel.CoordinateWithFrame(0.2, 3));
             coordinates.X.Add(new ViewModel.CoordinateWithFrame(0.8, 4));
             coordinates.X.Add(new ViewModel.CoordinateWithFrame(0.1, 5));
-
+            */
             // Init Kinect
             kinect = KinectSensor.GetDefault();
             if (kinect == null)
@@ -58,6 +59,7 @@ namespace MotionTracker
             }
 
             kinect.Open();
+            this.bodies = new Body[kinect.BodyFrameSource.BodyCount];
             bodyFrameReader = kinect.BodyFrameSource.OpenReader();
             bodyFrameReader.FrameArrived += bodyFrameReader_FrameArrived;
         }
@@ -65,6 +67,14 @@ namespace MotionTracker
         /* フレームが来る度に呼び出される.距離の単位はメートル.*/
         private void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {
+            this.frameSkip++;
+            if (this.frameSkip != 12) return;
+            this.frameSkip = 0;
+
+            this.chartX.XAxis.MinValue = coordinates.X.Count - 70;
+            this.chartY.XAxis.MinValue = coordinates.Y.Count - 70;
+            this.chartZ.XAxis.MinValue = coordinates.Z.Count - 70;
+
             JointType selectedJoint = (JointType)Enum.Parse(typeof(JointType), this.jointsComboBox.SelectedItem.ToString());
 
             // Collectionにデータを追加する
@@ -75,14 +85,39 @@ namespace MotionTracker
                     return;
                 }
                 // ボディデータを取得する
+
                 bodyFrame.GetAndRefreshBodyData(bodies);
                 
                 //ボディがトラッキングできている
                 foreach (var body in bodies.Where(b => b.IsTracked)) 
                 {
-                    CoordinateWithFrame x = new CoordinateWithFrame(body.Joints[selectedJoint].Position.X);
-                    CoordinateWithFrame y = new CoordinateWithFrame(body.Joints[selectedJoint].Position.Y);
-                    CoordinateWithFrame z = new CoordinateWithFrame(body.Joints[selectedJoint].Position.Z);
+                    CoordinateWithFrame x = new CoordinateWithFrame((double)body.Joints[selectedJoint].Position.X);
+                    CoordinateWithFrame y = new CoordinateWithFrame((double)body.Joints[selectedJoint].Position.Y);
+                    CoordinateWithFrame z = new CoordinateWithFrame((double)body.Joints[selectedJoint].Position.Z);
+                    //Console.WriteLine((double)body.Joints[selectedJoint].Position.Z);
+                    x.countUp();
+                    y.countUp();
+                    z.countUp();
+
+                    /*
+                    if (coordinates.X.Count == 80) coordinates.X.Clear();
+                    if (coordinates.Y.Count == 80) coordinates.Y.Clear();
+                    if (coordinates.Z.Count == 80) coordinates.Z.Clear();
+                    */
+
+                    
+                  
+                    
+
+                    if (this.coordinates.X.Count >= 50)
+                    {
+                        Console.WriteLine("100以上");
+                        this.chartX.XAxis.MinValue = (int)this.chartX.XAxis.MaxValue - 50;
+                    }
+                    Console.WriteLine();
+
+
+
                     this.coordinates.X.Add(x);
                     this.coordinates.Y.Add(y);
                     this.coordinates.Z.Add(z);
@@ -112,7 +147,7 @@ namespace MotionTracker
             }else if(inferred == true)
             {
                 this.trackedLabel.Background = Brushes.LightGray;
-                this.inferredLabel.Background = Brushes.CadetBlue;
+                this.inferredLabel.Background = Brushes.Blue;
                 this.notTrackedLabel.Background = Brushes.LightGray;
             }else if(notTracked == true)
             {

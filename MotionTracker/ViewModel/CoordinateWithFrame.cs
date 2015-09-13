@@ -16,10 +16,16 @@ namespace MotionTracker.ViewModel
         {
             Count++;
             this.Coordinate = coordinate;
-            this.Frame = frame;
+            this.Frame = Count;
         }
 
         public CoordinateWithFrame(double coordinate)
+        {
+            Count++;
+            this.Coordinate = coordinate;
+        }
+
+        public void countUp()
         {
             Count++;
             this.Frame = Count;

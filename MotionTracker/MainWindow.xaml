@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MotionTracker"
         xmlns:sparrow="http://sparrowtoolkit.codeplex.com/wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="470">
+        Title="MotionTracker - Kinect v2" Height="600" Width="470" Icon="bone_leftonly.png">
     <Grid Margin="0,0,5,0.5">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
@@ -14,35 +14,35 @@
             <RowDefinition Height="170*"/>
             <RowDefinition Height="170*"/>
         </Grid.RowDefinitions>
-        <ComboBox x:Name="jointsComboBox" HorizontalAlignment="Left" Margin="10,10,0,14" Width="190" FontSize="26.667"/>
-        <Label x:Name="trackedLabel" Content="Tracked" Margin="0,10,155,14" Background="#FF5FF270" HorizontalAlignment="Right" Width="76" BorderBrush="Black" FontSize="13.333"/>
-        <Label x:Name="inferredLabel" Content="Inferred" Margin="0,10,76,14" Background="#FF78B3E3" HorizontalAlignment="Right" Width="74" BorderBrush="Black" FontSize="13.333"/>
-        <Label x:Name="notTrackedLabel" Content="Not&#xD;&#xA;Tracked" Margin="0,10,0,14" Background="#FFF18080" HorizontalAlignment="Right" Width="71" BorderBrush="Black" FontSize="13.333"/>
+        <ComboBox x:Name="jointsComboBox" HorizontalAlignment="Left" Margin="10,10,0,14" Width="190" FontSize="26.667" SelectedIndex="1"/>
+        <Label x:Name="trackedLabel" Content="Tracked" Margin="0,10,155,14" HorizontalAlignment="Right" Width="76" BorderBrush="Black" FontSize="13.333" Background="LightGray"/>
+        <Label x:Name="inferredLabel" Content="Inferred" Margin="0,10,76,14" HorizontalAlignment="Right" Width="74" BorderBrush="Black" FontSize="13.333" Background="LightGray"/>
+        <Label x:Name="notTrackedLabel" Content="Not&#xD;&#xA;Tracked" Margin="0,10,0,14" HorizontalAlignment="Right" Width="71" BorderBrush="Black" FontSize="13.333" Background="LightGray"/>
 
-        <sparrow:SparrowChart x:Name="chartX" Margin="0,10,10,0.5" Grid.Row="1">
+        <sparrow:SparrowChart x:Name="chartX" Margin="0,10,10,0.5" Grid.Row="1" >
             <sparrow:SparrowChart.XAxis>
-                <sparrow:LinearXAxis />
+                <sparrow:LinearXAxis ShowCrossLines="False" />
             </sparrow:SparrowChart.XAxis>
             <sparrow:SparrowChart.YAxis>
-                <sparrow:LinearYAxis />
+                <sparrow:LinearYAxis MaxValue="2" MinValue="-2" Header="X(m)" />
             </sparrow:SparrowChart.YAxis>
             <sparrow:LineSeries PointsSource="{Binding X}" XPath="Frame" YPath="Coordinate" />
         </sparrow:SparrowChart>
         <sparrow:SparrowChart x:Name="chartY" Margin="0,4.5,10,0.5" Grid.Row="2">
             <sparrow:SparrowChart.XAxis>
-                <sparrow:LinearXAxis />
+                <sparrow:LinearXAxis ShowCrossLines="False" />
             </sparrow:SparrowChart.XAxis>
             <sparrow:SparrowChart.YAxis>
-                <sparrow:LinearYAxis />
+                <sparrow:LinearYAxis MaxValue="2.5" MinValue="-2" Header="Y(m)" />
             </sparrow:SparrowChart.YAxis>
             <sparrow:LineSeries PointsSource="{Binding Y}" XPath="Frame" YPath="Coordinate" />
         </sparrow:SparrowChart>
-        <sparrow:SparrowChart x:Name="chartZ" Grid.Row="3" Margin="0,5,10,0.5">
+        <sparrow:SparrowChart x:Name="chartZ" Grid.Row="3" Margin="0,5,10,0.5" >
             <sparrow:SparrowChart.XAxis>
-                <sparrow:LinearXAxis />
+                <sparrow:LinearXAxis ShowCrossLines="False" />
             </sparrow:SparrowChart.XAxis>
             <sparrow:SparrowChart.YAxis>
-                <sparrow:LinearYAxis />
+                <sparrow:LinearYAxis MaxValue="3" MinValue="0" Header="Z(m)" />
             </sparrow:SparrowChart.YAxis>
             <sparrow:LineSeries PointsSource="{Binding Z}" XPath="Frame" YPath="Coordinate" />
         </sparrow:SparrowChart>
