@@ -65,6 +65,8 @@ namespace MotionTracker
         /* フレームが来る度に呼び出される.距離の単位はメートル.*/
         private void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {
+            JointType selectedJoint = (JointType)Enum.Parse(typeof(JointType), this.jointsComboBox.SelectedItem.ToString());
+
             // Collectionにデータを追加する
             using (var bodyFrame = e.FrameReference.AcquireFrame())
             {
@@ -74,16 +76,51 @@ namespace MotionTracker
                 }
                 // ボディデータを取得する
                 bodyFrame.GetAndRefreshBodyData(bodies);
-
+                
                 //ボディがトラッキングできている
-                foreach (var body in bodies.Where(b => b.IsTracked))
+                foreach (var body in bodies.Where(b => b.IsTracked)) 
                 {
-                    //左手のX座標を取得
-                    System.Diagnostics.Debug.WriteLine("X=" + body.Joints[JointType.HandLeft].Position.X);
+                    CoordinateWithFrame x = new CoordinateWithFrame(body.Joints[selectedJoint].Position.X);
+                    CoordinateWithFrame y = new CoordinateWithFrame(body.Joints[selectedJoint].Position.Y);
+                    CoordinateWithFrame z = new CoordinateWithFrame(body.Joints[selectedJoint].Position.Z);
+                    this.coordinates.X.Add(x);
+                    this.coordinates.Y.Add(y);
+                    this.coordinates.Z.Add(z);
+
+                    if (body.Joints[selectedJoint].TrackingState == TrackingState.Tracked)
+                    {
+                        setTrackingStateLabelColor(true, false, false);
+                    }else if(body.Joints[selectedJoint].TrackingState == TrackingState.Inferred)
+                    {
+                        setTrackingStateLabelColor(false, true, false);
+                    }else if(body.Joints[selectedJoint].TrackingState == TrackingState.NotTracked)
+                    {
+                        setTrackingStateLabelColor(false, false, true);
+                    }
+
                 }
             }
         }
 
+        private void setTrackingStateLabelColor(Boolean tracked, Boolean inferred, Boolean notTracked)
+        {
+            if(tracked == true)
+            {
+                this.trackedLabel.Background = Brushes.Green;
+                this.inferredLabel.Background = Brushes.LightGray;
+                this.notTrackedLabel.Background = Brushes.LightGray;
+            }else if(inferred == true)
+            {
+                this.trackedLabel.Background = Brushes.LightGray;
+                this.inferredLabel.Background = Brushes.CadetBlue;
+                this.notTrackedLabel.Background = Brushes.LightGray;
+            }else if(notTracked == true)
+            {
+                this.trackedLabel.Background = Brushes.LightGray;
+                this.trackedLabel.Background = Brushes.LightGray;
+                this.trackedLabel.Background = Brushes.Red;
+            }
+        }
         
     }
 }

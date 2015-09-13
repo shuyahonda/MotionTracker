@@ -15,9 +15,9 @@
             <RowDefinition Height="170*"/>
         </Grid.RowDefinitions>
         <ComboBox x:Name="jointsComboBox" HorizontalAlignment="Left" Margin="10,10,0,14" Width="190" FontSize="26.667"/>
-        <Label x:Name="label" Content="Track&#xD;&#xA;" Margin="0,10,155,14" Background="#FF5FF270" HorizontalAlignment="Right" Width="76" BorderBrush="Black" FontSize="13.333"/>
-        <Label x:Name="label1" Content="Inffered" Margin="0,10,76,14" Background="#FF78B3E3" HorizontalAlignment="Right" Width="74" BorderBrush="Black" FontSize="13.333"/>
-        <Label x:Name="label2" Content="Not Track" Margin="0,10,0,14" Background="#FFF18080" HorizontalAlignment="Right" Width="71" BorderBrush="Black" FontSize="13.333"/>
+        <Label x:Name="trackedLabel" Content="Tracked" Margin="0,10,155,14" Background="#FF5FF270" HorizontalAlignment="Right" Width="76" BorderBrush="Black" FontSize="13.333"/>
+        <Label x:Name="inferredLabel" Content="Inferred" Margin="0,10,76,14" Background="#FF78B3E3" HorizontalAlignment="Right" Width="74" BorderBrush="Black" FontSize="13.333"/>
+        <Label x:Name="notTrackedLabel" Content="Not&#xD;&#xA;Tracked" Margin="0,10,0,14" Background="#FFF18080" HorizontalAlignment="Right" Width="71" BorderBrush="Black" FontSize="13.333"/>
 
         <sparrow:SparrowChart x:Name="chartX" Margin="0,10,10,0.5" Grid.Row="1">
             <sparrow:SparrowChart.XAxis>

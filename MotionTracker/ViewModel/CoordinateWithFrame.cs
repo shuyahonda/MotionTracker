@@ -8,13 +8,21 @@ namespace MotionTracker.ViewModel
 {
     class CoordinateWithFrame
     {
+        public static double Count = 0;
         public double Coordinate { get; set; }
-        public int Frame { get; set; }
+        public double Frame { get; set; }
 
-        public CoordinateWithFrame(double coordinate,int frame)
+        public CoordinateWithFrame(double coordinate,double frame)
         {
+            Count++;
             this.Coordinate = coordinate;
             this.Frame = frame;
+        }
+
+        public CoordinateWithFrame(double coordinate)
+        {
+            Count++;
+            this.Frame = Count;
         }
     }
 
