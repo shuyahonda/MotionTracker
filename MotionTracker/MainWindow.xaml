@@ -10,14 +10,16 @@
     <Grid Margin="0,0,5,0.5">
         <Grid.RowDefinitions>
             <RowDefinition Height="74*"/>
-            <RowDefinition Height="499*"/>
+            <RowDefinition Height="153*"/>
+            <RowDefinition Height="159*"/>
+            <RowDefinition Height="186*"/>
         </Grid.RowDefinitions>
         <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="154" Height="47"/>
         <Label x:Name="label" Content="Track&#xD;&#xA;" HorizontalAlignment="Left" Margin="186,10,0,0" VerticalAlignment="Top" Height="47" Width="76" Background="#FF5FF270"/>
         <Label x:Name="label1" Content="Inffered" HorizontalAlignment="Left" Margin="267,10,0,0" VerticalAlignment="Top" Height="47" Width="74" Background="#FF78B3E3"/>
         <Label x:Name="label2" Content="Not Track" HorizontalAlignment="Left" Margin="346,10,0,0" VerticalAlignment="Top" Height="47" Width="71" Background="#FFF18080"/>
 
-        <sparrow:SparrowChart x:Name="chartX" Margin="0,10,0,334.5" Grid.Row="1">
+        <sparrow:SparrowChart x:Name="chartX" Margin="0,10,0,148" Grid.Row="1" Grid.RowSpan="2">
             <sparrow:SparrowChart.XAxis>
                 <sparrow:LinearXAxis />
             </sparrow:SparrowChart.XAxis>
@@ -26,7 +28,7 @@
             </sparrow:SparrowChart.YAxis>
             <sparrow:LineSeries PointsSource="{Binding X}" XPath="Frame" YPath="Coordinate" />
         </sparrow:SparrowChart>
-        <sparrow:SparrowChart x:Name="chartY" Margin="0,169,0,175.5" Grid.Row="1">
+        <sparrow:SparrowChart x:Name="chartY" Margin="0,16,0,176" Grid.Row="2" Grid.RowSpan="2">
             <sparrow:SparrowChart.XAxis>
                 <sparrow:LinearXAxis />
             </sparrow:SparrowChart.XAxis>
@@ -35,7 +37,7 @@
             </sparrow:SparrowChart.YAxis>
             <sparrow:LineSeries PointsSource="{Binding Y}" XPath="Frame" YPath="Coordinate" />
         </sparrow:SparrowChart>
-        <sparrow:SparrowChart x:Name="chartZ" Margin="0,328,0,16.5" Grid.Row="1">
+        <sparrow:SparrowChart x:Name="chartZ" Margin="0,16" Grid.Row="3">
             <sparrow:SparrowChart.XAxis>
                 <sparrow:LinearXAxis />
             </sparrow:SparrowChart.XAxis>

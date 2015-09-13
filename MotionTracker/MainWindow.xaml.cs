@@ -44,7 +44,7 @@ namespace MotionTracker
             coordinates.X.Add(new ViewModel.CoordinateWithFrame(0.8, 4));
             coordinates.X.Add(new ViewModel.CoordinateWithFrame(0.1, 5));
 
-
+            // Init Kinect
             kinect = KinectSensor.GetDefault();
             if (kinect == null)
             {
@@ -54,15 +54,12 @@ namespace MotionTracker
             kinect.Open();
             bodyFrameReader = kinect.BodyFrameSource.OpenReader();
             bodyFrameReader.FrameArrived += bodyFrameReader_FrameArrived;
-
-            //this.DataContext = new 
         }
 
-        /* フレームが来る度に呼び出される。距離の単位はメートル。*/
+        /* フレームが来る度に呼び出される.距離の単位はメートル.*/
         private void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {
-            //グラフに座標をプロットする
-
+            // Collectionにデータを追加する
             using (var bodyFrame = e.FrameReference.AcquireFrame())
             {
                 if (bodyFrame == null)
