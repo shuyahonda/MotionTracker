@@ -1,4 +1,5 @@
 ﻿using Microsoft.Kinect;
+using MotionTracker.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,6 @@ namespace MotionTracker
         private BodyFrameReader bodyFrameReader;
         private Body[] bodies;
         ThreeDimensionalCoordinates coordinates;
-        int i = 6;
 
         public MainWindow()
         {
@@ -36,6 +36,12 @@ namespace MotionTracker
             this.chartX.DataContext = coordinates;
             this.chartY.DataContext = coordinates;
             this.chartZ.DataContext = coordinates;
+
+            // JointType
+            foreach (JointType joint in Enum.GetValues(typeof(JointType)))
+            {
+                this.jointsComboBox.Items.Add(joint.ToString());
+            }
 
             // test
             coordinates.X.Add(new ViewModel.CoordinateWithFrame(0.5, 1));
@@ -68,7 +74,8 @@ namespace MotionTracker
                 }
                 // ボディデータを取得する
                 bodyFrame.GetAndRefreshBodyData(bodies);
-                //認識しているBodyに対して
+
+                //ボディがトラッキングできている
                 foreach (var body in bodies.Where(b => b.IsTracked))
                 {
                     //左手のX座標を取得
@@ -77,19 +84,6 @@ namespace MotionTracker
             }
         }
 
-        private void Window_MouseEnter(object sender, MouseEventArgs e)
-        {
-            for (int i = 6; i<100 ; i++) {
-                
-                coordinates.X.Add(new ViewModel.CoordinateWithFrame(0.6, i));
-            }
-        }
-
-        private void Window_TouchMove(object sender, TouchEventArgs e)
-        {
-            Console.WriteLine("TouchMove");
-            coordinates.X.Add(new ViewModel.CoordinateWithFrame(0.6, i));
-
-        }
+        
     }
 }
