@@ -90,6 +90,7 @@ namespace MotionTracker
 
         private void Window_TouchMove(object sender, TouchEventArgs e)
         {
+            Console.WriteLine("TouchMove");
             coordinates.X.Add(new ViewModel.CoordinateWithFrame(0.6, i));
 
         }
