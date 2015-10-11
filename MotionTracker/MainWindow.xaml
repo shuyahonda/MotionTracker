@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MotionTracker"
         xmlns:sparrow="http://sparrowtoolkit.codeplex.com/wpf"
         mc:Ignorable="d"
-        Title="MotionTracker - Kinect v2" Height="600" Width="550" Icon="bone_leftonly.png">
+        Title="MotionTracker - Kinect v2" Height="600" Width="600" Icon="bone_leftonly.png">
     <Grid Margin="0,0,5,0.5">
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
@@ -18,10 +18,10 @@
         <Label x:Name="trackedLabel" Content="Tracked" Margin="0,10,155,14" HorizontalAlignment="Right" Width="76" BorderBrush="Black" FontSize="13.333" Background="LightGray"/>
         <Label x:Name="inferredLabel" Content="Inferred" Margin="0,10,76,14" HorizontalAlignment="Right" Width="74" BorderBrush="Black" FontSize="13.333" Background="LightGray"/>
         <Label x:Name="notTrackedLabel" Content="Not&#xD;&#xA;Tracked" Margin="0,10,0,14" HorizontalAlignment="Right" Width="71" BorderBrush="Black" FontSize="13.333" Background="LightGray"/>
-S
+
         <sparrow:SparrowChart x:Name="chartX" Margin="0,10,10,0.5" Grid.Row="1" >
             <sparrow:SparrowChart.XAxis>
-                <sparrow:LinearXAxis ShowCrossLines="False" MaxValue="400" MinValue="1" />
+                <sparrow:LinearXAxis MaxValue="400" MinValue="1" ShowCrossLines="True"/>
             </sparrow:SparrowChart.XAxis>
             <sparrow:SparrowChart.YAxis>
                 <sparrow:LinearYAxis MaxValue="1" MinValue="-1" Header="X(m)" />
@@ -30,7 +30,7 @@ S
         </sparrow:SparrowChart>
         <sparrow:SparrowChart x:Name="chartY" Margin="0,4.5,10,0.5" Grid.Row="2">
             <sparrow:SparrowChart.XAxis>
-                <sparrow:LinearXAxis ShowCrossLines="False" MaxValue="400" MinValue="1" />
+                <sparrow:LinearXAxis ShowCrossLines="True" MaxValue="400" MinValue="1" />
             </sparrow:SparrowChart.XAxis>
             <sparrow:SparrowChart.YAxis>
                 <sparrow:LinearYAxis MaxValue="2.5" MinValue="-1.5" Header="Y(m)" />
@@ -39,14 +39,16 @@ S
         </sparrow:SparrowChart>
         <sparrow:SparrowChart x:Name="chartZ" Grid.Row="3" Margin="0,5,10,0.5" >
             <sparrow:SparrowChart.XAxis>
-                <sparrow:LinearXAxis ShowCrossLines="False" MaxValue="400" MinValue="1" />
+                <sparrow:LinearXAxis ShowCrossLines="True" MaxValue="400" MinValue="1" />
             </sparrow:SparrowChart.XAxis>
             <sparrow:SparrowChart.YAxis>
                 <sparrow:LinearYAxis MaxValue="3.0" MinValue="1.0" Header="Z(m)" />
             </sparrow:SparrowChart.YAxis>
             <sparrow:LineSeries PointsSource="{Binding Z}" XPath="Frame" YPath="Coordinate" Stroke="#FF2B33EC" BorderThickness="0" StrokeThickness="2" />
         </sparrow:SparrowChart>
-        <Button x:Name="chartInitButton" Content="初期化" HorizontalAlignment="Left" Margin="205,10,0,14" Width="75" Click="chartInitButton_Click"/>
+        <Button x:Name="chartInitButton" Content="初期化" HorizontalAlignment="Left" Margin="205,10,0,14" Width="45" Click="chartInitButton_Click"/>
+        <Button x:Name="csvExportButton" Content="CSV" HorizontalAlignment="Left" Margin="255,10,0,14" Width="35" Click="csvExportButton_Click"/>
+        <Button x:Name="stopButton" Content="開始" HorizontalAlignment="Left" Margin="295,10,0,14" Width="35" Click="stopButton_Click"/>
 
 
     </Grid>

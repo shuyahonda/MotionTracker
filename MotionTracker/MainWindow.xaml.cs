@@ -27,11 +27,14 @@ namespace MotionTracker
         private Body[] bodies;
         ThreeDimensionalCoordinates coordinates;
         int frameSkip = 0;
+        private Boolean isReading;
 
         public MainWindow()
         {
             InitializeComponent();
 
+
+            this.isReading = false;
             // データバインド
             coordinates = new ThreeDimensionalCoordinates();
             this.chartX.DataContext = coordinates;
@@ -67,6 +70,8 @@ namespace MotionTracker
         /* フレームが来る度に呼び出される.距離の単位はメートル.*/
         private void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {
+            if (this.isReading == false) return;
+
             this.frameSkip++;
             if (this.frameSkip != 6) return;
             this.frameSkip = 0;
@@ -156,8 +161,8 @@ namespace MotionTracker
             }else if(notTracked == true)
             {
                 this.trackedLabel.Background = Brushes.LightGray;
-                this.trackedLabel.Background = Brushes.LightGray;
-                this.trackedLabel.Background = Brushes.Red;
+                this.inferredLabel.Background = Brushes.LightGray;
+                this.notTrackedLabel.Background = Brushes.Red;
             }
         }
 
@@ -168,6 +173,24 @@ namespace MotionTracker
             this.coordinates.Z.Clear();
             CoordinateWithFrame.initCount();
        
+        }
+
+        private void csvExportButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void stopButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(this.isReading == true)
+            {
+                this.stopButton.Content = "開始";
+                this.isReading = false;
+            }else
+            {
+                this.stopButton.Content = "停止";
+                this.isReading = true;
+            }
         }
     }
 }
